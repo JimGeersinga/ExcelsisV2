@@ -12,38 +12,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var Utils;
 (function (Utils) {
-    //@Component({
-    //    selector: 'letter-avatar',
-    //    template: '{{canvas}}',
-    //})
-    //export class LetterAvatar {
-    //    componentName: 'LetterAvatar';
-    //    canvas: HTMLCanvasElement;
-    //    constructor( @Attribute("height") cHeight, @Attribute("width") cWidth, @Attribute("isCircle") isCircle, @Attribute("content") content ) {
-    //        var colours: any = ["#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50", "#f1c40f", "#e67e22", "#e74c3c", "#95a5a6", "#f39c12", "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d"];
-    //        var contentSplit = content.split(" "),
-    //            initials = contentSplit[0].charAt(0).toUpperCase() + contentSplit[1].charAt(0).toUpperCase();
-    //        var charIndex = initials.charCodeAt(0) - 65,
-    //            colourIndex = charIndex % 19;
-    //        this.canvas = document.createElement('canvas');
-    //        var context = this.canvas.getContext("2d");
-    //        if (window.devicePixelRatio) {
-    //            this.canvas.setAttribute("width", String(+cWidth * window.devicePixelRatio));
-    //            this.canvas.setAttribute("height", String(+cHeight * window.devicePixelRatio));
-    //            this.canvas.style.cssText = 'width: ' + cWidth + '; height: ' + cHeight + '; ';
-    //            if (isCircle) {
-    //                this.canvas.style.cssText += ' border-radius: 9999px; ';
-    //            }
-    //            context.scale(window.devicePixelRatio, window.devicePixelRatio);
-    //        }
-    //        context.fillStyle = colours[colourIndex];
-    //        context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    //        context.font = "110px Arial";
-    //        context.textAlign = "center";
-    //        context.fillStyle = "#FFF";
-    //        context.fillText(initials, +cWidth / 2, +cHeight / 1.5);
-    //    }
-    //}
     var LetterAvatar = (function () {
         function LetterAvatar(el) {
             this.background = null;
@@ -322,16 +290,27 @@ var Exams;
                 .map(function (res) { return res.json(); })
                 .subscribe(function (data) {
                 var output = [], keys = [];
+                _this.result = data;
                 for (var i = 0; i < data.length; i++) {
                     var key = data[i]['Subject'];
                     if (keys.indexOf(key) === -1) {
                         keys.push(key);
                         output.push(data[i]);
                     }
+                    if (keys.indexOf(key) === -1) {
+                        _this.result.push(key);
+                        _this.result[key] = data[i];
+                    }
+                    else {
+                    }
                 }
                 _this.exams = output;
             }, function (err) { return console.log(err); }, function () { return console.log('Completed'); });
         }
+        Index.prototype.openModal = function (exam) {
+            var modal = ionic_angular_1.Modal.create(Detail, { exam: exam.Subject });
+            this.nav.present(modal);
+        };
         Index = __decorate([
             core_1.Component({
                 templateUrl: 'build/pages/exams/index.html',
@@ -342,6 +321,42 @@ var Exams;
         return Index;
     }());
     Exams.Index = Index;
+    var Detail = (function () {
+        function Detail(http, nav, navParams, viewCtrl) {
+            var _this = this;
+            this.http = http;
+            this.nav = nav;
+            this.viewCtrl = viewCtrl;
+            this.exams = [];
+            var exam = navParams.get('exam');
+            http.get('exams.json')
+                .map(function (res) { return res.json(); })
+                .subscribe(function (data) {
+                var output = [];
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].Subject === exam) {
+                        output.push(data[i]);
+                    }
+                }
+                _this.exams = output;
+                _this.Subject = output[0].Subject;
+                _this.Abbreviation = output[0].Abbreviation;
+                _this.Crebo = output[0].Crebo;
+            }, function (err) { return console.log(err); }, function () { return console.log('Completed'); });
+        }
+        Detail.prototype.dismiss = function () {
+            this.viewCtrl.dismiss();
+        };
+        Detail = __decorate([
+            core_1.Component({
+                templateUrl: 'build/pages/exams/detail.html',
+                directives: [Utils_1.Utils.LetterAvatar]
+            }), 
+            __metadata('design:paramtypes', [http_1.Http, ionic_angular_1.NavController, ionic_angular_1.NavParams, ionic_angular_1.ViewController])
+        ], Detail);
+        return Detail;
+    }());
+    Exams.Detail = Detail;
 })(Exams = exports.Exams || (exports.Exams = {}));
 },{"../../Utils":1,"@angular/core":152,"@angular/http":240,"ionic-angular":416}],6:[function(require,module,exports){
 "use strict";

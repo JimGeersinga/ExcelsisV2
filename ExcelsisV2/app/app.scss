@@ -1,0 +1,51 @@
+.toolbar{
+    .toolbar-background {
+      background: color($colors, primary);
+    }
+    .toolbar-title {    
+        color: white;
+    }
+    .bar-button-default {
+        color: white;
+    }
+}
+
+.menu{
+    .menu-header{
+        height: 140px;
+        background: color($colors, primary);
+
+        .avatar{
+            position: absolute;
+            top:16px;
+            left:16px;
+        }
+        .name, .subjects{
+            position: absolute;
+            left: 16px;            
+            font-size: 14px;            
+            width: 90%;
+        }
+        .name{
+            top: 70px;
+            color: white;
+        }
+        .subjects{
+            color: rgba(255,255,255,0.7);
+            top:95px;
+        }
+    }
+    .menu-nav-list {
+        .item .item-icon{
+            color:gray;
+        }
+        .item.activated, .item.active{
+            color:#55add5 !important;
+            background-color:#f1f1f1;
+
+            .item-icon{
+                color:#55add5 !important;
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+<ion-menu [content]="content">
+  <ion-content class="menu">
+    <div class="menu-header">
+      <letter-avatar class="avatar" size="60" isSquar="false" text="Jim Geersinga"></letter-avatar>
+      <h2 class="name">Jim Geersinga</h2>
+      <p class="subjects">Applicatieontwikkerlaar / Engels</p>
+    </div>
+    <ion-list no-lines class="menu-nav-list">
+      <button menuClose ion-item 
+              *ngFor="let p of pages" 
+              (click)="openPage(p)"
+              [ngClass]="{'active':p.title == ActivePage}">
+        <ion-icon item-left name="{{p.icon}}"></ion-icon>
+        <h2>{{p.title}}</h2>        
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false" ></ion-nav>

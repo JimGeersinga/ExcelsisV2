@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Examens</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="exams">
+  <ion-list>
+    <button ion-item *ngFor="let exam of exams">     
+      <ion-avatar item-left>
+        <letter-avatar size="50" isSquar="false" letter="{{exam.Abbreviation}}"></letter-avatar>
+      </ion-avatar>
+      <h2>{{exam.Subject}}</h2>
+      <p>Crebo: {{exam.Crebo}}</p>
+    </button>
+  </ion-list> 
+</ion-content>

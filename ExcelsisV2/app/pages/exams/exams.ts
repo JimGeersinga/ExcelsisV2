@@ -2,38 +2,24 @@ import { Component } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Modal, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Utils } from '../../Utils';
+import { PipeLines } from '../../Pipelines';
+
 
 export namespace Exams {
     @Component({
         templateUrl: 'build/pages/exams/index.html',
-        directives: [Utils.LetterAvatar]
+        directives: [Utils.LetterAvatar],
+        pipes: [PipeLines.UniquePipe]
     })
     export class Index {
         exams: any;
-        result: any;
 
         constructor(public http: Http, private nav: NavController, navParams: NavParams) {
             this.exams = [];
             http.get('exams.json')
                 .map(res => res.json())
-                .subscribe(data => {
-                    var output = [],
-                        keys = [];   
-                    this.result = data;                     
-                    for (var i = 0; i < data.length;i++){
-                        var key = data[i]['Subject'];
-                        if (keys.indexOf(key) === -1) {
-                            keys.push(key);
-                            output.push(data[i]);
-                        }
-
-                        if (keys.indexOf(key) === -1) {
-                            this.result.push(key);
-                            this.result[key] = data[i];
-                        } else {
-                        }
-                    }
-                    this.exams = output;
+                .subscribe(data => {                
+                    this.exams = data;
                 },
                 err => console.log(err),
                 () => console.log('Completed')
@@ -49,7 +35,8 @@ export namespace Exams {
 
     @Component({
         templateUrl: 'build/pages/exams/detail.html',
-        directives: [Utils.LetterAvatar]
+        directives: [Utils.LetterAvatar],
+        pipes: [PipeLines.UniquePipe, PipeLines.FilterPipe]
     })
     export class Detail {
         exams: any;

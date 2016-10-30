@@ -9,7 +9,7 @@
 
 <ion-content class="exams">
   <ion-list>
-    <button ion-item *ngFor="let exam of exams" (click)="openModal(exam)">     
+    <button ion-item *ngFor="let exam of (exams | unique: 'Subject')" (click)="openModal(exam)">     
       <ion-avatar item-left>
         <letter-avatar size="50" isSquar="false" letter="{{exam.Abbreviation}}"></letter-avatar>
       </ion-avatar>

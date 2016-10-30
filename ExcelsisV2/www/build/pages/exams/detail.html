@@ -14,19 +14,26 @@
 
 <ion-content>
   <ion-list>
-    <ion-item>
+    <ion-item ion-item>
       <ion-avatar item-left>
         <letter-avatar size="50" isSquar="false" letter="{{Abbreviation}}"></letter-avatar>
       </ion-avatar>
       <h2>{{Subject}}</h2>
       <p>Crebo: {{Crebo}}</p>
     </ion-item>
+  </ion-list>
 
-    <ion-item *ngFor="let exam of exams">
+  <ion-list *ngFor="let e of (exams | unique: 'Cohort')">
+    <ion-list-header>
+      Cohort {{e.Cohort}}
+    </ion-list-header>    
+
+    <button ion-item *ngFor="let exam of (exams | filter: {Cohort: e.Cohort})" (click)="openAssessment(exam)">
       {{exam.Name}}
       <ion-note item-right>
         {{exam.Cohort}}
       </ion-note>
-    </ion-item>
+    </button>
+
   </ion-list>
 </ion-content>

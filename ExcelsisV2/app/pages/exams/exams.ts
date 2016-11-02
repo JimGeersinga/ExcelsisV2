@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Modal, NavController, NavParams, ViewController } from 'ionic-angular';
+import { Assessments } from '../assessments/assessments';
 import { Utils } from '../../Utils';
 import { PipeLines } from '../../Pipelines';
 
@@ -67,6 +68,9 @@ export namespace Exams {
         }
         dismiss() {
             this.viewCtrl.dismiss();
+        }
+        openAssessment(exam) {
+            this.nav.push(Assessments.Index, { subject: exam.Subject, cohort: exam.Cohort, name: exam.Name });
         }
     }
 }

@@ -8,6 +8,21 @@
 </ion-header>
 
 
-<ion-content padding class="assessments">
-    <h2 class="center">Beoordelingen</h2>    
-</ion-content>
+<ion-content class="assessments">
+  <!--text-wrap -->
+  <div *ngFor="let category of Categories">
+
+    <ion-item-divider light>{{category.Name}}</ion-item-divider>
+
+    <div *ngFor="let criterion of category.Criteria">
+      <button ion-item text-wrap>
+        <ion-avatar item-left>
+          <letter-avatar size="40" border="2px solid #3a5c64" fontColor="#3a5c64" isSquar="false" letter="{{criterion.OrderNumber}}"></letter-avatar>
+        </ion-avatar>
+        <p>{{criterion.Title}}</p>
+      </button>
+    </div>
+
+  </div> 
+
+</ion-content>  

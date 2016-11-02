@@ -38,18 +38,22 @@ export namespace Utils {
             }
             if (!this.text) {
                 this.text = '?';
-            }
+            }            
             var size = this && this.size ? this.size : 100;
             this.fontColor = this.fontColor ? this.fontColor : "#FFFFFF";
             var isSquare = this && this.isSquare ? true : false;
             var border = this && this.border ? this.border : "1px solid #d3d3d3";
             var background = this && this.background ? this.background : null;
             if (this.letter == null) {
-                var text = this && this.text ? this.text : null;
-                var textArray = text.split(' ');
-                var letter = textArray[0].substr(0, 1) + '' + (textArray.length > 1 ? textArray[1].substr(0, 1) : '');
-                letter = letter.toUpperCase();
-                this.letter = letter;
+                if (!this.text) {
+                    this.letter = '?';
+                } else {
+                    var text = this && this.text ? this.text : null;
+                    var textArray = text.split(' ');
+                    var letter = textArray[0].substr(0, 1) + '' + (textArray.length > 1 ? textArray[1].substr(0, 1) : '');
+                    letter = letter.toUpperCase();
+                    this.letter = letter;
+                }
             }
             this.background = background;
             this.fontSize = (39 * size) / 100;

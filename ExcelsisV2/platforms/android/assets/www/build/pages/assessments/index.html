@@ -7,22 +7,51 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content class="assessments">
   <!--text-wrap -->
-  <div *ngFor="let category of Categories">
+  <ion-item-group *ngFor="let category of assessment?.Categories">
 
     <ion-item-divider light>{{category.Name}}</ion-item-divider>
 
     <div *ngFor="let criterion of category.Criteria">
-      <button ion-item text-wrap>
+
+      <button ion-item text-wrap (click)="toggleItem(criterion)">
         <ion-avatar item-left>
-          <letter-avatar size="40" border="2px solid #3a5c64" fontColor="#3a5c64" isSquar="false" letter="{{criterion.OrderNumber}}"></letter-avatar>
+
+          <letter-avatar size="40" border="1px solid #3a5c64" fontColor="#3a5c64" 
+                         fontColorActive="#ffffff" backgroundActive="#3a5c64" 
+                         isSquar="false" letter="{{criterion.OrderNumber}}" letterAvatarActive="{{criterion.Result}}">
+          </letter-avatar>
+
         </ion-avatar>
         <p>{{criterion.Title}}</p>
       </button>
+
+      <ion-item class="item-buttons" *ngIf="isItemShown(criterion)" [ngClass]="{'active': isItemShown(criterion) }">
+        <ion-row>
+          <ion-col width-33>
+            <button ion-button [outline]="isNotItemResult(criterion, 'yes')" (click)="setItemResult(criterion, 'yes')">
+              Ja
+            </button>
+          </ion-col>
+          <ion-col width-33>
+            <button ion-button [outline]="isNotItemResult(criterion, 'no')" (click)="setItemResult(criterion, 'no')">
+              Nee
+            </button>
+          </ion-col>
+          <ion-col width-33 class="extra">
+            <button ion-button outline>
+              ?
+            </button>
+        
+            <button ion-button outline>
+              +
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-item>
     </div>
 
-  </div> 
+  </ion-item-group>
 
-</ion-content>  
+</ion-content>

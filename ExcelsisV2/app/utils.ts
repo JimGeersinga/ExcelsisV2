@@ -6,12 +6,15 @@ export namespace Utils {
         selector: 'letter-avatar',
         template: `
             <div *ngIf="props" [style.background-color]="props.background" [style.width] = "props.size" [style.line-height]='props.lineheight' [style.height] = 'props.size' [style.font-size] = 'props.fontSize' [style.border] = 'props.border' [style.border-radius] = 'props.borderradius' [style.text-align] ="props.textalign"> 
-            <div [style.color]='fontColor'>{{props.letter}}</div>
+            <div [style.color]='props.fontColor'>{{props.letter}}</div>
             </div>
             `,
         changeDetection: ChangeDetectionStrategy.OnPush
     })
     export class LetterAvatar implements OnInit, OnChanges {
+        @Input('letterAvatarActive') isActive: string = 'default';
+        @Input('backgroundActive') backgroundActive: string = null;
+        @Input('fontColorActive') fontColorActive: string = null;
         @Input('background') background: string = null;
         @Input('fontSize') fontSize: number = 49;
         @Input('padding') padding: number = 28;
@@ -72,11 +75,18 @@ export namespace Utils {
             }
             this.props['textalign'] = 'center';
             this.props['border'] = border;
-            this.props['background'] = background;
-            if (this.fixedColor && !background) {
-                this.props['background'] = background || this.colorize(this.letter);
+            var isActive = (this && typeof this.isActive !== 'undefined' && (this.isActive === 'yes' || this.isActive === 'no')) ? true : false;
+            if (isActive) {
+                this.props['background'] = this.backgroundActive;
+                this.props['fontColor'] = this.fontColorActive;
             } else {
-                this.props['background'] = background || this.getRandomColor();
+                this.props['fontColor'] = this.fontColor;
+                this.props['background'] = background;
+                if (this.fixedColor && !background) {
+                    this.props['background'] = background || this.colorize(this.letter);
+                } else {
+                    this.props['background'] = background || this.getRandomColor();
+                }
             }
             return true;
         };

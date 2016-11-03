@@ -2,4 +2,21 @@
     .center{
         text-align:center;
     }
+    .item-buttons{
+        height:0px;
+        transition: height 2s;
+
+        .item-button{
+            padding: 1.8em;
+            width: 100%;
+        }
+        .extra{  
+            .item-button{                
+                width:45%;
+            }
+        }
+    }
+    .item-buttons.active{
+        height:89px;
+    }
 }

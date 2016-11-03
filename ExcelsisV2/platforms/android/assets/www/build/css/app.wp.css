@@ -9209,3 +9209,16 @@ body {
 
 .assessments .center {
   text-align: center; }
+
+.assessments .item-buttons {
+  height: 0px;
+  -webkit-transition: height 2s;
+  transition: height 2s; }
+  .assessments .item-buttons .item-button {
+    padding: 1.8em;
+    width: 100%; }
+  .assessments .item-buttons .extra .item-button {
+    width: 45%; }
+
+.assessments .item-buttons.active {
+  height: 89px; }

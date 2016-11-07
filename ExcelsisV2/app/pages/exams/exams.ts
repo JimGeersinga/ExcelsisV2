@@ -27,8 +27,7 @@ export namespace Exams {
             );               
         }
 
-        openModal(exam) {
-            
+        openModal(exam) {            
             let modal = Modal.create(Detail, {exam : exam.Subject});
             this.nav.present(modal);
         }
@@ -70,7 +69,7 @@ export namespace Exams {
             this.viewCtrl.dismiss();
         }
         openAssessment(exam) {
-            this.nav.push(Assessments.Index, { subject: exam.Subject, cohort: exam.Cohort, name: exam.Name });
+            this.nav.setRoot(Assessments.Index, { subject: exam.Subject, cohort: exam.Cohort, name: exam.Name });
         }
     }
 }

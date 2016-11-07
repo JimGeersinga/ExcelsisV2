@@ -1,7 +1,4 @@
-.assessments {
-    .center{
-        text-align:center;
-    }
+.assessments {    
     .item-buttons{
         height:0px;
         transition: height 2s;
@@ -18,5 +15,56 @@
     }
     .item-buttons.active{
         height:89px;
+    }
+    .info{
+        .text-right{
+            input{
+                text-align:right;
+            }
+        }
+    }
+}
+
+.assessments.extrainfo{
+    ion-col[width-25]{
+        text-align:center;
+
+        button.item-button{
+            padding: 1.8em;
+            max-width: 100px;
+            width: 100%;
+        }
+    } 
+    textarea.text-input {       
+        height: calc(100vh - 190px);   
+    }
+}
+
+.assessments.documentation{
+    p{
+        padding: 10px;
+    }
+}
+
+ion-footer.assessments{
+    p{
+        margin:0;
+        color:white;
+        span{
+            ion-icon{
+                color:white;
+            }
+           ion-label{
+               color:white;
+           }
+        }        
+    }
+}
+
+@media only screen and (min-height: 768px) and (min-width: 768px){
+    .assessments.extrainfo{
+        textarea.text-input {
+            height: 410px;
+        }
     }
 }

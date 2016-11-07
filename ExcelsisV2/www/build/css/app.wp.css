@@ -9204,11 +9204,14 @@ body {
   .menu .menu-nav-list .item.activated .item-icon, .menu .menu-nav-list .item.active .item-icon {
     color: #55add5 !important; }
 
-.dashboard .center {
+.text-left {
+  text-align: left; }
+
+.text-center {
   text-align: center; }
 
-.assessments .center {
-  text-align: center; }
+.text-right {
+  text-align: right; }
 
 .assessments .item-buttons {
   height: 0px;
@@ -9222,3 +9225,31 @@ body {
 
 .assessments .item-buttons.active {
   height: 89px; }
+
+.assessments .info .text-right input {
+  text-align: right; }
+
+.assessments.extrainfo ion-col[width-25] {
+  text-align: center; }
+  .assessments.extrainfo ion-col[width-25] button.item-button {
+    padding: 1.8em;
+    max-width: 100px;
+    width: 100%; }
+
+.assessments.extrainfo textarea.text-input {
+  height: calc(100vh - 190px); }
+
+.assessments.documentation p {
+  padding: 10px; }
+
+ion-footer.assessments p {
+  margin: 0;
+  color: white; }
+  ion-footer.assessments p span ion-icon {
+    color: white; }
+  ion-footer.assessments p span ion-label {
+    color: white; }
+
+@media only screen and (min-height: 768px) and (min-width: 768px) {
+  .assessments.extrainfo textarea.text-input {
+    height: 410px; } }

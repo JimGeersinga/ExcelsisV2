@@ -1,14 +1,36 @@
 <ion-header>
-  <ion-navbar>
-    <button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+  <ion-navbar>    
     <ion-title>Beoordelingen</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="assessments">
-  <!--text-wrap -->
+  <ion-list class="info">
+
+    <ion-item>
+      <ion-label>Studentnaam</ion-label>
+      <ion-input class="text-right" right type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Studentnummer</ion-label>
+      <ion-input class="text-right" right type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Examinator</ion-label>
+      <ion-input class="text-right" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Datum</ion-label>
+      <ion-datetime displayFormat="DDD DD MMMM YYYY" pickerFormat="DD MMM YYYY"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Tijd</ion-label>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"></ion-datetime>
+    </ion-item>
+  </ion-list>
+
+
   <ion-item-group *ngFor="let category of assessment?.Categories">
 
     <ion-item-divider light>{{category.Name}}</ion-item-divider>
@@ -18,8 +40,8 @@
       <button ion-item text-wrap (click)="toggleItem(criterion)">
         <ion-avatar item-left>
 
-          <letter-avatar size="40" border="1px solid #3a5c64" fontColor="#3a5c64" 
-                         fontColorActive="#ffffff" backgroundActive="#3a5c64" 
+          <letter-avatar size="40" border="1px solid #3a5c64" fontColor="#3a5c64"
+                         fontColorActive="#ffffff" backgroundActive="#3a5c64"
                          isSquar="false" letter="{{criterion.OrderNumber}}" letterAvatarActive="{{criterion.Result}}">
           </letter-avatar>
 
@@ -40,12 +62,12 @@
             </button>
           </ion-col>
           <ion-col width-33 class="extra">
-            <button ion-button outline>
-              ?
+            <button ion-button outline (click)="openDocumentation(exam)">
+              <ion-icon name="help"></ion-icon>
             </button>
-        
-            <button ion-button outline>
-              +
+
+            <button ion-button outline (click)="openExtraInfo(exam)">
+              <ion-icon name="add"></ion-icon>
             </button>
           </ion-col>
         </ion-row>
@@ -55,3 +77,34 @@
   </ion-item-group>
 
 </ion-content>
+
+<ion-footer class="assessments">
+  <ion-toolbar>
+    <p>
+      <span>
+        <ion-chip>
+          <ion-icon name="close" color="white"></ion-icon>
+          <ion-label>{{assessment?.Fail  || '0'}}/{{assessment?.TotalFail || '0'}}</ion-label>
+        </ion-chip>
+      </span>
+      <span>
+        <ion-chip>
+          <ion-icon name="checkmark" color="white"></ion-icon>
+          <ion-label>{{assessment?.Pass || '0'}}/{{assessment?.TotalPass  || '0'}}</ion-label>
+        </ion-chip>        
+      </span>
+      <span>
+        <ion-chip>
+          <ion-icon name="done-all" color="white"></ion-icon>
+          <ion-label>{{assessment?.Excellent  || '0'}}/{{assessment?.TotalExcellent || '0'}}</ion-label>
+        </ion-chip>                
+      </span>
+    </p>
+    <ion-buttons end>
+      <button (click)="endAssessment()">
+        Ga verder
+        <ion-icon name="arrow-dropright-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

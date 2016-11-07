@@ -19,7 +19,11 @@ class MyApp {
   pages: Array<{title: string, component: any, icon: string}>
 
   constructor(private platform: Platform) {
-    this.initializeApp();
+      this.initializeApp();
+
+      StatusBar.overlaysWebView(true); // let status bar overlay webview
+
+      StatusBar.styleBlackOpaque();
       
     this.pages = [
         { title: 'Startpagina', component: Dashboard.Index, icon: 'home'},
@@ -29,8 +33,17 @@ class MyApp {
   }
 
   initializeApp() {
+    var self = this;
+
     this.platform.ready().then(() => {
-        StatusBar.styleBlackTranslucent();
+        //this.platform.registerBackButtonAction((event) => {
+        //    let view = self.nav.getActive();            
+        //    if (view.instance instanceof Assessments.Index) {
+                
+        //    } else {
+        //        self.nav.pop();
+        //    }
+        //}, 100);
     });
   }
 

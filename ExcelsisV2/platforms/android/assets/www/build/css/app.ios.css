@@ -8708,14 +8708,18 @@ body {
     color: rgba(255, 255, 255, 0.7);
     top: 95px; }
 
-.menu .menu-nav-list .item .item-icon {
-  color: gray; }
+.menu .menu-nav-list:first-child {
+  border: 0px; }
 
-.menu .menu-nav-list .item.activated, .menu .menu-nav-list .item.active {
-  color: #55add5 !important;
-  background-color: #f1f1f1; }
-  .menu .menu-nav-list .item.activated .item-icon, .menu .menu-nav-list .item.active .item-icon {
-    color: #55add5 !important; }
+.menu .menu-nav-list {
+  border-top: 1px solid gray; }
+  .menu .menu-nav-list .item .item-icon {
+    color: gray; }
+  .menu .menu-nav-list .item.activated, .menu .menu-nav-list .item.active {
+    color: #55add5 !important;
+    background-color: #f1f1f1; }
+    .menu .menu-nav-list .item.activated .item-icon, .menu .menu-nav-list .item.active .item-icon {
+      color: #55add5 !important; }
 
 .text-left {
   text-align: left; }

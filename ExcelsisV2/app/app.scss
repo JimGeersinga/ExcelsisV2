@@ -35,7 +35,12 @@
             top:95px;
         }
     }
+    .menu-nav-list:first-child{
+        border: 0px;
+    }
     .menu-nav-list {
+        border-top: 1px solid gray;
+
         .item .item-icon{
             color:gray;
         }

@@ -1,17 +1,27 @@
 <ion-menu [content]="content" id="mainMenu">
   <ion-content class="menu">
-    <div class="menu-header">
-      <letter-avatar class="avatar" size="60" isSquar="false" text="Jim Geersinga"></letter-avatar>
+    <div class="menu-header" (click)="openProfile()">
+      <letter-avatar class="avatar" size="60" isSquar="false" text="Jim Geersinga" ></letter-avatar>
       <h2 class="name">Jim Geersinga</h2>
       <p class="subjects">Applicatieontwikkerlaar / Engels</p>
     </div>
     <ion-list no-lines class="menu-nav-list">
       <button menuClose ion-item 
-              *ngFor="let p of pages" 
+              *ngFor="let p of pages | filter: {menuOrder: 0}" 
               (click)="openPage(p)"
               [ngClass]="{'active':p.title == ActivePage}">
         <ion-icon item-left name="{{p.icon}}"></ion-icon>
         <h2>{{p.title}}</h2>        
+      </button>
+    </ion-list>
+
+    <ion-list no-lines class="menu-nav-list">     
+      <button menuClose ion-item
+              *ngFor="let p of pages | filter: {menuOrder: 1}"
+              (click)="openPage(p)"
+              [ngClass]="{'active':p.title == ActivePage}">
+        <ion-icon item-left name="{{p.icon}}"></ion-icon>
+        <h2>{{p.title}}</h2>
       </button>
     </ion-list>
   </ion-content>

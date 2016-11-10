@@ -7,6 +7,8 @@ import {AuthHttp, AuthConfig} from 'angular2-jwt';
 import { Utils } from './Utils';
 import { PipeLines } from './Pipelines';
 
+import { AssessmentService } from './services/assessment.service';
+
 import { Dashboard } from './pages/dashboard/dashboard';
 import { Exams } from './pages/exams/exams';
 import { Assessments } from './pages/assessments/assessments';
@@ -22,7 +24,8 @@ import { Profile } from './pages/profile/profile';
                 return new AuthHttp(new AuthConfig, http);
             },
             deps: [Http]
-        })
+        }),
+        AssessmentService
     ]
 })
 class MyApp {
@@ -42,8 +45,8 @@ class MyApp {
     this.pages = [
         { title: 'Startpagina', component: Dashboard.Index, icon: 'home', menuOrder: 0 },
         { title: 'Examens', component: Exams.Index, icon: 'document', menuOrder: 0 },
-        { title: 'Beoordelingen', component: Assessments.Index, icon: 'paper', menuOrder: 0 },
-        { title: 'Profiel', component: Profile.Index, icon: 'person', menuOrder: 1 }
+        { title: 'Beoordelingen', component: Assessments.List, icon: 'paper', menuOrder: 0 }
+        //{ title: 'Profiel', component: Profile.Index, icon: 'person', menuOrder: 1 }
     ];
   }
 

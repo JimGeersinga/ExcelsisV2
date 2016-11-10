@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { Modal, NavController, MenuController,  NavParams, ViewController } from 'ionic-angular';
+import { Modal, NavController, MenuController, NavParams, ViewController, Platform } from 'ionic-angular';
 import { Utils } from '../../Utils';
 import { PipeLines } from '../../Pipelines';
+import { AssessmentService } from '../../services/assessment.service';
 
 export namespace Assessments {
 
@@ -12,53 +13,50 @@ export namespace Assessments {
         pipes: [PipeLines.UniquePipe]
     })
     export class Index {
-        assessment: any;
-        item: any = null;
-        confirmedExit: boolean = false;
+        public assessment;
+        public exam;
+        public item: any = null;
+        public confirmedExit: boolean = false;
 
-        constructor(public http: Http, private menu: MenuController, private nav: NavController, navParams: NavParams) {
-            var exam_subject = navParams.get('subject');
-            var exam_cohort = navParams.get('cohort');
-            var exam_name = navParams.get('name');
-            http.get('exams.json')
-                .map(res => res.json())
-                .subscribe(data => {
-                    for (var i = 0; i < data.length; i++) {
-                        if (data[i].Subject === exam_subject && data[i].Cohort === exam_cohort && data[i].Name === exam_name) {
-                           
-                            for (var ii = 0; ii < data[i].Categories.length; ii++) {
-                                for (var iii = 0; iii < data[i].Categories[ii].Criteria.length; iii++) {  
-                                    data[i].TotalFail = data[i].TotalFail || 0;
-                                    data[i].TotalPass = data[i].TotalPass || 0;
-                                    data[i].TotalExcellent = data[i].TotalExcellent || 0;
-                                    data[i].Fail = data[i].Fail || 0;
-                                    data[i].Pass = data[i].Pass || 0;
-                                    data[i].Excellent = data[i].Excellent || 0;
+        constructor(private assessmentService: AssessmentService,
+            private http: Http,
+            private menu: MenuController,
+            private nav: NavController,
+            private navParams: NavParams,
+            private platform: Platform,
+            private zone: NgZone) {  
 
-                                    data[i].TotalFail += (data[i].Categories[ii].Criteria[iii].Weight === 'fail') ? 1 : 0;
-                                    data[i].TotalPass += (data[i].Categories[ii].Criteria[iii].Weight === 'pass') ? 1 : 0;
-                                    data[i].TotalExcellent += (data[i].Categories[ii].Criteria[iii].Weight === 'excellent') ? 1 : 0;
-                                }
-                            }
-                            this.assessment = data[i];
-                        }
+            this.assessmentService.initDB();
+        }
+
+        public ionViewLoaded() {
+            this.exam = this.navParams.get('exam');
+            this.assessment = this.navParams.get('assessment');
+
+            if (!this.assessment) {
+                this.assessment = this.exam;
+                for (var ii = 0; ii < this.assessment.Categories.length; ii++) {
+                    for (var iii = 0; iii < this.assessment.Categories[ii].Criteria.length; iii++) {
+                        this.assessment.TotalFail = this.assessment.TotalFail || 0;
+                        this.assessment.TotalPass = this.assessment.TotalPass || 0;
+                        this.assessment.TotalExcellent = this.assessment.TotalExcellent || 0;
+                        this.assessment.Fail = this.assessment.Fail || 0;
+                        this.assessment.Pass = this.assessment.Pass || 0;
+                        this.assessment.Excellent = this.assessment.Excellent || 0;
+
+                        this.assessment.TotalFail += (this.assessment.Categories[ii].Criteria[iii].Weight === 'fail') ? 1 : 0;
+                        this.assessment.TotalPass += (this.assessment.Categories[ii].Criteria[iii].Weight === 'pass') ? 1 : 0;
+                        this.assessment.TotalExcellent += (this.assessment.Categories[ii].Criteria[iii].Weight === 'excellent') ? 1 : 0;
                     }
-                },
-                err => console.log(err),
-                () => console.log('Completed')
-            );
-        }
+                }
+            }
+        }       
 
-        endAssessment() {
-            this.confirmedExit = true;
-            this.nav.pop().catch(() => console.log('should I stay or should I go now'));
-        }
-
-        ionViewDidEnter() {
+        public ionViewDidEnter() {
             this.menu.swipeEnable(false, 'mainMenu');
         }
 
-        ionViewCanLeave(): boolean {
+        public ionViewCanLeave(): boolean {
             // here we can either return true or false
             // depending on if we want to leave this view
             if (!this.confirmedExit) {
@@ -68,25 +66,37 @@ export namespace Assessments {
             }
         }
 
-        toggleItem(criterion) {
+        public endAssessment() {
+            if (this.assessment._id && this.assessment._rev) {
+                this.assessment.Date = new Date();
+                this.assessmentService.update(this.assessment);
+            } else {
+                this.assessmentService.add(this.assessment);
+            }
+
+            this.confirmedExit = true;
+            this.nav.pop().catch(() => console.log('should I stay or should I go now'));
+        }
+
+        public toggleItem(criterion) {
             this.item = this.isItemShown(criterion) ? null : criterion;
         };
 
-        isItemShown(criterion) {
+        public isItemShown(criterion) {
             return this.item === criterion;
         };
 
-        isNotItemResult(criterion, value) {
+        public isNotItemResult(criterion, value) {
             var result = criterion.Result || 'default';
             return (result !== value);            
         };
 
-        isItemResultSet(criterion) {
+        public isItemResultSet(criterion) {
             var result = criterion.Result || 'default';
             return (result === 'yes' || result === 'no'); 
         }
 
-        setItemResult(criterion, value) {
+        public setItemResult(criterion, value) {
             if (criterion.Weight === 'excellent') {                
                 if (criterion.Result !== value && value === 'yes') {
                     this.assessment.Excellent++;
@@ -109,11 +119,11 @@ export namespace Assessments {
             criterion.Result = (criterion.Result === value) ? 'default' : value;
         };
 
-        openDocumentation() {
+        public openDocumentation() {
             let modal = Modal.create(Documentation);
             this.nav.present(modal);
         }
-        openExtraInfo() {
+        public openExtraInfo() {
             let modal = Modal.create(ExtraInfo);
             this.nav.present(modal);
         }
@@ -126,7 +136,7 @@ export namespace Assessments {
         constructor(public viewCtrl: ViewController) {
         }
 
-        dismiss() {
+        public dismiss() {
             this.viewCtrl.dismiss();
         }
     }
@@ -138,8 +148,42 @@ export namespace Assessments {
         constructor(public viewCtrl: ViewController) {
         }
 
-        dismiss() {
+        public dismiss() {
             this.viewCtrl.dismiss();
+        }
+    }
+
+
+    @Component({
+        templateUrl: 'build/pages/assessments/list.html',
+        directives: [Utils.LetterAvatar]
+    })
+    export class List {
+        public assessments = [];
+
+        constructor(private assessmentService: AssessmentService,
+            private nav: NavController,
+            private platform: Platform,
+            private zone: NgZone) {
+
+        }
+
+        ionViewLoaded() {
+            this.platform.ready().then(() => {
+                this.assessmentService.initDB();
+
+                this.assessmentService.getAll()
+                    .then(data => {
+                        this.zone.run(() => {
+                            this.assessments = data;
+                        });
+                    })
+                    .catch(console.error.bind(console));
+            });
+        }
+
+        openAssessment(assessment) {
+            this.nav.push(Assessments.Index, {assessment: assessment});
         }
     }
 }

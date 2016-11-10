@@ -69,7 +69,7 @@ export namespace Exams {
             this.viewCtrl.dismiss();
         }
         openAssessment(exam) {
-            this.nav.setRoot(Assessments.Index, { subject: exam.Subject, cohort: exam.Cohort, name: exam.Name });
+            this.nav.setRoot(Assessments.Index, { exam: exam});
         }
     }
 }

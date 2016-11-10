@@ -9246,6 +9246,9 @@ body {
 .assessments.documentation p {
   padding: 10px; }
 
+.assessments.list .open {
+  max-width: 120px; }
+
 ion-footer.assessments p {
   margin: 0;
   color: white; }

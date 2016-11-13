@@ -52,21 +52,21 @@
       <ion-item class="item-buttons" *ngIf="isItemShown(criterion)" [ngClass]="{'active': isItemShown(criterion) }">
         <ion-row>
           <ion-col width-33>
-            <button ion-button [outline]="isNotItemResult(criterion, 'yes')" (click)="setItemResult(criterion, 'yes')">
+            <button [outline]="!isItemResultSet(criterion, 'yes')" (click)="setItemResult(criterion, 'yes')">
               Ja
             </button>
           </ion-col>
           <ion-col width-33>
-            <button ion-button [outline]="isNotItemResult(criterion, 'no')" (click)="setItemResult(criterion, 'no')">
+            <button [outline]="!isItemResultSet(criterion, 'no')" (click)="setItemResult(criterion, 'no')">
               Nee
             </button>
           </ion-col>
           <ion-col width-33 class="extra">
-            <button ion-button outline (click)="openDocumentation(exam)">
+            <button ion-button outline (click)="openDocumentation(criterion)">
               <ion-icon name="help"></ion-icon>
             </button>
 
-            <button ion-button outline (click)="openExtraInfo(exam)">
+            <button [outline]="!isExtraInfoSet(criterion)" (click)="openExtraInfo(criterion)">
               <ion-icon name="add"></ion-icon>
             </button>
           </ion-col>

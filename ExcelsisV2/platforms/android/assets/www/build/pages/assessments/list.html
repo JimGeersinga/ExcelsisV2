@@ -8,186 +8,17 @@
 
 <ion-content class="assessments list">
   <!--<button ion-item  (click)="openAssessment(assessment)">-->
-  <ion-card *ngFor="let assessment of assessments">
-    <ion-item>
-      <ion-avatar item-left>
-        <letter-avatar size="50" isSquar="false" letter="O"></letter-avatar>
-      </ion-avatar>
-      <h2>{{assessment.StudentName || 'Jim Geersinga'}} ({{assessment.StudentNumber || '99024308'}})</h2>
-      <p>{{assessment.Assessed || 'Donderdag 11 november 2016 om 11:54'}}</p>
-    </ion-item>
-
-    <ion-card-content style="display:none">
-      <p>
-        <b>Examen:</b>
-        <br>{{assessment.Subject}} - {{assessment.Name}} - {{assessment.Cohort}}
-      </p>
-      <p>
-        <b> Examinatoren:</b>
-        <br>
-        <ion-chip>
-          <ion-avatar>
-            <letter-avatar size="32" isSquar="false" letter="SLE"></letter-avatar>
-          </ion-avatar>
-          <ion-label>J. Slemmer</ion-label>
-        </ion-chip>
-
-        <ion-chip>
-          <ion-avatar>
-            <letter-avatar size="32" isSquar="false" letter="JAN"></letter-avatar>
-          </ion-avatar>
-          <ion-label>C. Jansen</ion-label>
-        </ion-chip>
-
-        <ion-chip>
-          <ion-avatar>
-            <letter-avatar size="32" isSquar="false" letter="NOU"></letter-avatar>
-          </ion-avatar>
-          <ion-label>M. Nouwen</ion-label>
-        </ion-chip>
-      </p>
-      <ion-row>
-        <ion-col text-left width-100>
-          <ion-chip>
-            <ion-icon name="close" color="white"></ion-icon>
-            <ion-label>{{assessment.Fail  || '0'}}/{{assessment.TotalFail || '0'}}</ion-label>
-          </ion-chip>
-          <ion-chip>
-            <ion-icon name="checkmark" color="white"></ion-icon>
-            <ion-label>{{assessment.Pass || '0'}}/{{assessment.TotalPass  || '0'}}</ion-label>
-          </ion-chip>
-          <ion-chip>
-            <ion-icon name="done-all" color="white"></ion-icon>
-            <ion-label>{{assessment.Excellent  || '0'}}/{{assessment.TotalExcellent || '0'}}</ion-label>
-          </ion-chip>
-        </ion-col>
-        <ion-col text-right class="open">
-          <button (click)="openAssessment(assessment)" clear icon-left ion-button small class="disable-hover button button-md button-clear button-clear-md button-small button-small-md button-clear-md-danger">
-            Bekijken
-            <ion-icon name="arrow-dropright-circle"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-card-content>
-
-    <ion-row no-padding>
-      <ion-col>
-        <button clear icon-left ion-button small class="disable-hover button button-md button-clear button-clear-md button-small button-small-md button-clear-md-danger">
-          <ion-icon name="mail"></ion-icon>
-          Email
-        </button>
-      </ion-col>
-      <ion-col text-center>
-        <button clear icon-left ion-button small class="disable-hover button button-md button-clear button-clear-md button-small button-small-md button-clear-md-danger">
-          <ion-icon name="git-compare"></ion-icon>
-          Vergelijk
-        </button>
-      </ion-col>
-      <ion-col text-right>
-        <button clear icon-left ion-button small class="disable-hover button button-md button-clear button-clear-md button-small button-small-md button-clear-md-danger">
-          <ion-icon name="trash"></ion-icon>
-          Verwijder
-        </button>
-      </ion-col>
-    </ion-row>
-
-  </ion-card>
 
   <ion-card *ngFor="let assessment of assessments">
-    <ion-item>
-      <ion-avatar item-left>
-        <letter-avatar size="50" isSquar="false" letter="V"></letter-avatar>
-      </ion-avatar>
-      <h2>{{assessment.StudentName || 'Jim Geersinga'}} ({{assessment.StudentNumber || '99024308'}})</h2>
-      <p>{{assessment.Assessed || 'Donderdag 11 november 2016 om 11:54'}}</p>
-    </ion-item>
-
-    <ion-card-content>
-      <p>
-        <b>Examen:</b>
-        <br>{{assessment.Subject}} - {{assessment.Name}} - {{assessment.Cohort}}
-      </p>
-      <p>
-        <b> Examinatoren:</b>
-        <br>
-        <ion-chip>
-          <ion-avatar>
-            <letter-avatar size="32" isSquar="false" letter="SLE"></letter-avatar>
-          </ion-avatar>
-          <ion-label>J. Slemmer</ion-label>
-        </ion-chip>
-
-        <ion-chip>
-          <ion-avatar>
-            <letter-avatar size="32" isSquar="false" letter="JAN"></letter-avatar>
-          </ion-avatar>
-          <ion-label>C. Jansen</ion-label>
-        </ion-chip>
-
-        <ion-chip>
-          <ion-avatar>
-            <letter-avatar size="32" isSquar="false" letter="NOU"></letter-avatar>
-          </ion-avatar>
-          <ion-label>M. Nouwen</ion-label>
-        </ion-chip>
-      </p>
-      <ion-row>
-        <ion-col text-left width-100>
-          <ion-chip>
-            <ion-icon name="close" color="white"></ion-icon>
-            <ion-label>{{assessment.Fail  || '0'}}/{{assessment.TotalFail || '0'}}</ion-label>
-          </ion-chip>
-          <ion-chip>
-            <ion-icon name="checkmark" color="white"></ion-icon>
-            <ion-label>{{assessment.Pass || '0'}}/{{assessment.TotalPass  || '0'}}</ion-label>
-          </ion-chip>
-          <ion-chip>
-            <ion-icon name="done-all" color="white"></ion-icon>
-            <ion-label>{{assessment.Excellent  || '0'}}/{{assessment.TotalExcellent || '0'}}</ion-label>
-          </ion-chip>
-        </ion-col>
-        <ion-col text-right class="open">
-          <button (click)="openAssessment(assessment)" clear icon-left ion-button small class="disable-hover button button-md button-clear button-clear-md button-small button-small-md button-clear-md-danger">
-            Bekijken
-            <ion-icon name="arrow-dropright-circle"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-card-content>
-
-    <ion-row no-padding>
-      <ion-col>
-        <button clear icon-left ion-button small class="disable-hover button button-md button-clear button-clear-md button-small button-small-md button-clear-md-danger">
-          <ion-icon name="mail"></ion-icon>
-          Email
-        </button>
-      </ion-col>
-      <ion-col text-center>
-        <button clear icon-left ion-button small class="disable-hover button button-md button-clear button-clear-md button-small button-small-md button-clear-md-danger">
-          <ion-icon name="git-compare"></ion-icon>
-          Vergelijk
-        </button>
-      </ion-col>
-      <ion-col text-right>
-        <button clear icon-left ion-button small class="disable-hover button button-md button-clear button-clear-md button-small button-small-md button-clear-md-danger">
-          <ion-icon name="trash"></ion-icon>
-          Verwijder
-        </button>
-      </ion-col>
-    </ion-row>
-
-  </ion-card>
-
-  <ion-card *ngFor="let assessment of assessments">
-    <ion-item>
+    <button ion-item (click)="toggleItem(assessment)">
       <ion-avatar item-left>
         <letter-avatar size="50" isSquar="false" letter="G"></letter-avatar>
       </ion-avatar>
       <h2>{{assessment.StudentName || 'Jim Geersinga'}} ({{assessment.StudentNumber || '99024308'}})</h2>
       <p>{{assessment.Assessed || 'Donderdag 11 november 2016 om 11:54'}}</p>
-    </ion-item>
+    </button>
 
-    <ion-card-content  style="display:none">
+    <ion-card-content *ngIf="isItemShown(assessment)">
       <p>
         <b>Examen:</b>
         <br>{{assessment.Subject}} - {{assessment.Name}} - {{assessment.Cohort}}
@@ -216,49 +47,43 @@
           <ion-label>M. Nouwen</ion-label>
         </ion-chip>
       </p>
-      <ion-row>
-        <ion-col text-left width-100>
-          <ion-chip>
-            <ion-icon name="close" color="white"></ion-icon>
-            <ion-label>{{assessment.Fail  || '0'}}/{{assessment.TotalFail || '0'}}</ion-label>
-          </ion-chip>
-          <ion-chip>
-            <ion-icon name="checkmark" color="white"></ion-icon>
-            <ion-label>{{assessment.Pass || '0'}}/{{assessment.TotalPass  || '0'}}</ion-label>
-          </ion-chip>
-          <ion-chip>
-            <ion-icon name="done-all" color="white"></ion-icon>
-            <ion-label>{{assessment.Excellent  || '0'}}/{{assessment.TotalExcellent || '0'}}</ion-label>
-          </ion-chip>
-        </ion-col>
-        <ion-col text-right class="open">
-          <button (click)="openAssessment(assessment)" clear icon-left ion-button small class="disable-hover button button-md button-clear button-clear-md button-small button-small-md button-clear-md-danger">
-            Bekijken
-            <ion-icon name="arrow-dropright-circle"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
+      <p>
+        <b> Resultaten:</b>
+        <br>
+        <ion-chip>
+          <ion-icon name="close" color="white"></ion-icon>
+          <ion-label>{{assessment.Fail  || '0'}}/{{assessment.TotalFail || '0'}}</ion-label>
+        </ion-chip>
+        <ion-chip>
+          <ion-icon name="checkmark" color="white"></ion-icon>
+          <ion-label>{{assessment.Pass || '0'}}/{{assessment.TotalPass  || '0'}}</ion-label>
+        </ion-chip>
+        <ion-chip>
+          <ion-icon name="done-all" color="white"></ion-icon>
+          <ion-label>{{assessment.Excellent  || '0'}}/{{assessment.TotalExcellent || '0'}}</ion-label>
+        </ion-chip>
+      </p>
     </ion-card-content>
 
     <ion-row no-padding>
       <ion-col>
-        <button clear icon-left ion-button small class="disable-hover button button-md button-clear button-clear-md button-small button-small-md button-clear-md-danger">
-          <ion-icon name="mail"></ion-icon>
-          Email
+        <button primary clear small (click)="openActionSheet(assessment)">
+          <ion-icon name="options"></ion-icon>
+          Opties
         </button>
       </ion-col>
-      <ion-col text-center>
-        <button clear icon-left ion-button small class="disable-hover button button-md button-clear button-clear-md button-small button-small-md button-clear-md-danger">
-          <ion-icon name="git-compare"></ion-icon>
-          Vergelijk
+      <ion-col center text-center>
+        <ion-note>
+          15/15
+        </ion-note>
+      </ion-col>
+      <ion-col text-right>        
+        <button primary clear small>
+          <div>Bekijken</div>
+          <ion-icon name="arrow-forward"></ion-icon>
         </button>
       </ion-col>
-      <ion-col text-right>
-        <button clear icon-left ion-button small class="disable-hover button button-md button-clear button-clear-md button-small button-small-md button-clear-md-danger">
-          <ion-icon name="trash"></ion-icon>
-          Verwijder
-        </button>
-      </ion-col>
+
     </ion-row>
 
   </ion-card>

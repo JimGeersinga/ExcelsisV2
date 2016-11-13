@@ -16,29 +16,29 @@
     <ion-item>
       <ion-row>
         <ion-col width-25>
-          <button ion-button outline>
+          <button ion-button [outline]="IsMarkActive('missed')" (click)="setMark('missed')">
             <ion-icon name="eye-off"></ion-icon>
           </button>
         </ion-col>
         <ion-col width-25>
-          <button ion-button outline>
+          <button ion-button [outline]="IsMarkActive('skip')" (click)="setMark('skip')">
             <ion-icon name="skip-forward"></ion-icon>
           </button>
         </ion-col>
         <ion-col width-25>
-          <button ion-button outline>
+          <button ion-button [outline]="IsMarkActive('later')" (click)="setMark('later')">
             <ion-icon name="alarm"></ion-icon>
           </button>
         </ion-col>
         <ion-col width-25>
-          <button ion-button outline>
+          <button ion-button [outline]="IsMarkActive('help')" (click)="setMark('help')">
             <ion-icon name="help"></ion-icon>
           </button>
         </ion-col>
       </ion-row>
     </ion-item>
     <ion-item>
-      <ion-textarea placeholder="Extra informatie...">
+      <ion-textarea [(ngModel)]="criterion.message" placeholder="Extra informatie...">
       </ion-textarea>
     </ion-item>
   </ion-list>

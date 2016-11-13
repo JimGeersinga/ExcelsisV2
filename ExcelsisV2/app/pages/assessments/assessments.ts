@@ -1,6 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { Modal, NavController, MenuController, NavParams, ViewController, Platform } from 'ionic-angular';
+import { Modal, NavController, MenuController, NavParams, ViewController, Platform, ActionSheet } from 'ionic-angular';
 import { Utils } from '../../Utils';
 import { PipeLines } from '../../Pipelines';
 import { AssessmentService } from '../../services/assessment.service';
@@ -78,6 +78,10 @@ export namespace Assessments {
             this.nav.pop().catch(() => console.log('should I stay or should I go now'));
         }
 
+        public isExtraInfoSet(criterion) {
+            return ((typeof criterion.marks != 'undefined' && criterion.marks.length > 0) || (typeof criterion.message != 'undefined' && criterion.message.length > 0));
+        }
+
         public toggleItem(criterion) {
             this.item = this.isItemShown(criterion) ? null : criterion;
         };
@@ -86,15 +90,10 @@ export namespace Assessments {
             return this.item === criterion;
         };
 
-        public isNotItemResult(criterion, value) {
+        public isItemResultSet(criterion, value) {
             var result = criterion.Result || 'default';
-            return (result !== value);            
+            return (result === value);            
         };
-
-        public isItemResultSet(criterion) {
-            var result = criterion.Result || 'default';
-            return (result === 'yes' || result === 'no'); 
-        }
 
         public setItemResult(criterion, value) {
             if (criterion.Weight === 'excellent') {                
@@ -123,8 +122,11 @@ export namespace Assessments {
             let modal = Modal.create(Documentation);
             this.nav.present(modal);
         }
-        public openExtraInfo() {
-            let modal = Modal.create(ExtraInfo);
+        public openExtraInfo(criterion) {
+            let modal = Modal.create(ExtraInfo, { criterion: criterion });
+            modal.onDismiss(data => {
+                criterion = data;
+            });
             this.nav.present(modal);
         }
     }
@@ -145,11 +147,31 @@ export namespace Assessments {
         templateUrl: 'build/pages/assessments/extrainfo.html'
     })
     export class ExtraInfo {
-        constructor(public viewCtrl: ViewController) {
+        criterion: any;
+
+        constructor(private navParams: NavParams,
+            public viewCtrl: ViewController) {
+
+            this.criterion = this.navParams.get('criterion');
+            this.criterion.marks = this.criterion.marks || [];
+        }
+
+        IsMarkActive(value) {
+            return (this.criterion.marks.indexOf(value) == -1)
+        }
+
+        setMark(value) {
+            var index = this.criterion.marks.indexOf(value);
+            if (index == -1) {
+                this.criterion.marks.push(value);
+            }
+            else {
+                this.criterion.marks.splice(index, 1)
+            }
         }
 
         public dismiss() {
-            this.viewCtrl.dismiss();
+            this.viewCtrl.dismiss(this.criterion);
         }
     }
 
@@ -160,6 +182,7 @@ export namespace Assessments {
     })
     export class List {
         public assessments = [];
+        public item: any = null;
 
         constructor(private assessmentService: AssessmentService,
             private nav: NavController,
@@ -181,6 +204,55 @@ export namespace Assessments {
                     .catch(console.error.bind(console));
             });
         }
+
+        public toggleItem(assessment) {
+            this.item = this.isItemShown(assessment) ? null : assessment;
+        };
+
+        public isItemShown(assessment) {
+            return this.item === assessment;
+        };
+
+        public openActionSheet(assessment) {
+            let actionSheet = ActionSheet.create({
+                title: 'Opties',
+                buttons: [
+                    {
+                        text: 'Verwijderen',
+                        icon: 'trash',
+                        handler: () => {
+                            console.log('delete clicked');
+                        }
+                    }, {
+                        text: 'Archieveren',
+                        icon: 'archive',
+                        handler: () => {
+                            console.log('Archive clicked');
+                        }
+                    }, {
+                        text: 'Samenvoegen',
+                        icon: 'git-compare',
+                        handler: () => {
+                            console.log('Compare clicked');
+                        }
+                    }, {
+                        text: 'Emailen',
+                        icon: 'mail',
+                        handler: () => {
+                            console.log('Email clicked');
+                        }
+                    }, {
+                        text: 'Cancel',
+                        role: 'cancel',
+                        handler: () => {
+                            console.log('Cancel clicked');
+                        }
+                    }
+                ]
+            });
+            this.nav.present(actionSheet);
+        }
+        
 
         openAssessment(assessment) {
             this.nav.push(Assessments.Index, {assessment: assessment});

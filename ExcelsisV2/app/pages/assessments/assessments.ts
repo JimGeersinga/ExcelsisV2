@@ -220,6 +220,7 @@ export namespace Assessments {
                     {
                         text: 'Verwijderen',
                         icon: 'trash',
+                        role: 'destructive',
                         handler: () => {
                             console.log('delete clicked');
                         }

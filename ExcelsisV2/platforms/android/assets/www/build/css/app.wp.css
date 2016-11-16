@@ -9198,15 +9198,13 @@ body {
 .menu .menu-nav-list:first-child {
   border: 0px; }
 
-.menu .menu-nav-list {
-  border-top: 1px solid gray; }
-  .menu .menu-nav-list .item .item-icon {
-    color: gray; }
-  .menu .menu-nav-list .item.activated, .menu .menu-nav-list .item.active {
-    color: #55add5 !important;
-    background-color: #f1f1f1; }
-    .menu .menu-nav-list .item.activated .item-icon, .menu .menu-nav-list .item.active .item-icon {
-      color: #55add5 !important; }
+.menu .menu-nav-list .item .item-icon {
+  color: gray; }
+
+.menu .menu-nav-list .item.activated, .menu .menu-nav-list .item.active {
+  color: #55add5 !important; }
+  .menu .menu-nav-list .item.activated .item-icon, .menu .menu-nav-list .item.active .item-icon {
+    color: #55add5 !important; }
 
 .text-left {
   text-align: left; }
@@ -9246,8 +9244,10 @@ body {
 .assessments.documentation p {
   padding: 10px; }
 
-.assessments.list .open {
-  max-width: 120px; }
+.assessments.list {
+  background-color: rgba(0, 0, 0, 0.15); }
+  .assessments.list .open {
+    max-width: 120px; }
 
 ion-footer.assessments p {
   margin: 0;

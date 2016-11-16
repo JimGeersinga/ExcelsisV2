@@ -39,14 +39,13 @@
         border: 0px;
     }
     .menu-nav-list {
-        border-top: 1px solid gray;
-
+       
         .item .item-icon{
             color:gray;
         }
         .item.activated, .item.active{
             color:#55add5 !important;
-            background-color:#f1f1f1;
+           // background-color:#f1f1f1;
 
             .item-icon{
                 color:#55add5 !important;

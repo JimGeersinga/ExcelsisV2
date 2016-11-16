@@ -2,14 +2,15 @@
   <ion-navbar>
     <button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button><ion-title>Beoordelingen</ion-title>
+    </button>
+    <ion-title>Beoordelingen</ion-title>    
   </ion-navbar>
 </ion-header>
 
 <ion-content class="assessments list">
   <!--<button ion-item  (click)="openAssessment(assessment)">-->
 
-  <ion-card *ngFor="let assessment of assessments">
+  <ion-card *ngFor="let assessment of assessments; let i = index">
     <button ion-item (click)="toggleItem(assessment)">
       <ion-avatar item-left>
         <letter-avatar size="50" isSquar="false" letter="G"></letter-avatar>
@@ -67,17 +68,17 @@
 
     <ion-row no-padding>
       <ion-col>
-        <button primary clear small (click)="openActionSheet(assessment)">
+        <button primary clear small (click)="openActionSheet(assessment, i)">
           <ion-icon name="options"></ion-icon>
           Opties
         </button>
       </ion-col>
       <ion-col center text-center>
         <ion-note>
-          15/15
+          {{(assessment.TotalCriteria || 0) - (assessment.CriteriaLeft || 0)}}/{{assessment.TotalCriteria || 0}}
         </ion-note>
       </ion-col>
-      <ion-col text-right>        
+      <ion-col text-right>
         <button primary clear small>
           <div>Bekijken</div>
           <ion-icon name="arrow-forward"></ion-icon>

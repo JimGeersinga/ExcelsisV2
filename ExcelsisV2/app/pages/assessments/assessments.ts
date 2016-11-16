@@ -47,23 +47,21 @@ export namespace Assessments {
                         this.assessment.TotalFail += (this.assessment.Categories[ii].Criteria[iii].Weight === 'fail') ? 1 : 0;
                         this.assessment.TotalPass += (this.assessment.Categories[ii].Criteria[iii].Weight === 'pass') ? 1 : 0;
                         this.assessment.TotalExcellent += (this.assessment.Categories[ii].Criteria[iii].Weight === 'excellent') ? 1 : 0;
+
+                        this.assessment.TotalCriteria = this.assessment.TotalFail + this.assessment.TotalPass + this.assessment.TotalExcellent;
+                        this.assessment.CriteriaLeft = this.assessment.TotalCriteria - (this.assessment.Fail + this.assessment.Pass + this.assessment.Excellent);
+                        
                     }
                 }
             }
         }       
 
-        public ionViewDidEnter() {
+        ionViewDidEnter() {
             this.menu.swipeEnable(false, 'mainMenu');
         }
 
-        public ionViewCanLeave(): boolean {
-            // here we can either return true or false
-            // depending on if we want to leave this view
-            if (!this.confirmedExit) {
-                return true;
-            } else {
-                return false;
-            }
+        ionViewDidLeave() {
+            this.menu.swipeEnable(true, 'mainMenu');
         }
 
         public endAssessment() {
@@ -74,7 +72,6 @@ export namespace Assessments {
                 this.assessmentService.add(this.assessment);
             }
 
-            this.confirmedExit = true;
             this.nav.pop().catch(() => console.log('should I stay or should I go now'));
         }
 
@@ -115,6 +112,13 @@ export namespace Assessments {
                     this.assessment.Fail--;
                 }
             }
+
+            if (criterion.Result === value) {
+                this.assessment.CriteriaLeft++;
+            } else if (criterion.Result !== value && (criterion.Result === 'default' || typeof criterion.Result === 'undefined')) {
+                this.assessment.CriteriaLeft--;
+            }
+
             criterion.Result = (criterion.Result === value) ? 'default' : value;
         };
 
@@ -213,7 +217,7 @@ export namespace Assessments {
             return this.item === assessment;
         };
 
-        public openActionSheet(assessment) {
+        public openActionSheet(assessment, index) {
             let actionSheet = ActionSheet.create({
                 title: 'Opties',
                 buttons: [
@@ -222,7 +226,7 @@ export namespace Assessments {
                         icon: 'trash',
                         role: 'destructive',
                         handler: () => {
-                            console.log('delete clicked');
+                            this.deleteAssessment(assessment, index);
                         }
                     }, {
                         text: 'Archieveren',
@@ -244,10 +248,7 @@ export namespace Assessments {
                         }
                     }, {
                         text: 'Cancel',
-                        role: 'cancel',
-                        handler: () => {
-                            console.log('Cancel clicked');
-                        }
+                        role: 'cancel'
                     }
                 ]
             });
@@ -256,7 +257,15 @@ export namespace Assessments {
         
 
         openAssessment(assessment) {
-            this.nav.push(Assessments.Index, {assessment: assessment});
+            this.nav.setRoot(Assessments.Index, { assessment: assessment });
         }
+
+        deleteAssessment(assessment, index) {
+            var self = this;
+            assessment.Date = new Date();
+            this.assessmentService.delete(assessment).then(function () {
+                self.assessments.splice(index, 1);
+            });
+        };
     }
 }

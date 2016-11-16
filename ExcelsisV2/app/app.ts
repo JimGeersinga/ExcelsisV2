@@ -53,16 +53,16 @@ class MyApp {
   initializeApp() {
     var self = this;
 
-    this.platform.ready().then(() => {
-        //this.platform.registerBackButtonAction((event) => {
-        //    let view = self.nav.getActive();            
-        //    if (view.instance instanceof Assessments.Index) {
+    //this.platform.ready().then(() => {
+    //    this.platform.registerBackButtonAction((event) => {
+    //        let view = self.nav.getActive();            
+    //        if (view.instance instanceof Assessments.Index) {
                 
-        //    } else {
-        //        self.nav.pop();
-        //    }
-        //}, 100);
-    });
+    //        } else {
+    //            self.nav.pop();
+    //        }
+    //    }, 100);
+    //});
   }
 
   openPage(page) {

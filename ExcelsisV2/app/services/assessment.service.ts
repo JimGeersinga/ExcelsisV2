@@ -45,7 +45,7 @@ export class AssessmentService {
     }
 
     public delete(assessment) {
-        return this._db.remove(assessment);
+        return Promise.resolve(this._db.remove(assessment));
     }
 
     private onDatabaseChange = (change) => {

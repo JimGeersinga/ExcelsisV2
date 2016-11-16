@@ -1,7 +1,10 @@
 <ion-header>
   <ion-navbar>    
     <ion-title>Beoordeling</ion-title>
-  </ion-navbar>
+    <ion-buttons end>
+      <ion-note center tex-center>Nog {{assessment?.CriteriaLeft || '0'}} Criteria</ion-note>
+    </ion-buttons>   
+  </ion-navbar> 
 </ion-header>
 
 <ion-content class="assessments">
